@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\BaseController.cs" />
+    <Compile Remove="Core\DataAccess\Repositories\CampaignRepository.cs" />
+    <Compile Remove="Core\DataAccess\Repositories\LocationRepository.cs" />
+    <Compile Remove="Core\DataAccess\Repositories\LocationTypeRepository.cs" />
+    <Compile Remove="Core\DataAccess\Repositories\ProvinceRepository.cs" />
+    <Compile Remove="Core\DataAccess\Repositories\RoleRepository.cs" />
+    <Compile Remove="Core\DataAccess\Repositories\SSOAuthRepository.cs" />
+    <Compile Remove="Core\DataAccess\Repositories\UserRepository.cs" />
+    <Compile Remove="Migrations\20190315165325_RemoveSSOTable.cs" />
+    <Compile Remove="Migrations\20190315165325_RemoveSSOTable.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Logs\" />
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JWT" Version="5.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+    <PackageReference Include="AutoMapper" Version="6.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="2.8.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.2" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.1.0" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.1" />
+    <PackageReference Include="Sendgrid" Version="9.9.0" />
+    <PackageReference Include="Serilog" Version="2.6.0" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="2.0.2" />
+    <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0" />
+    <PackageReference Include="Twilio" Version="5.27.2" />
+  </ItemGroup>
+
+</Project>
