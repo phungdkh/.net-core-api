@@ -96,7 +96,7 @@ namespace HVS.Api
             });
 
             var conn = Configuration.GetConnectionString("DefaultConnectionString");
-            services.AddDbContextPool<HVSNetCoreDbContext>(options => options.UseNpgsql(conn));
+            services.AddDbContextPool<HVSNetCoreDbContext>(options => options.UseSqlServer(conn));
 
             //Register JwtHelper
             services.AddScoped<IJwtHelper, JwtHelper>();
