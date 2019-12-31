@@ -36,3 +36,6 @@ HVS.Api/obj/project.assets.json
 HVS.Api/obj/HVS.Api.csproj.nuget.g.targets
 HVS.Api/obj/Debug/netcoreapp2.1/HVS.Api.dll
 HVS.Api/obj/Debug/netcoreapp2.1/HVS.Api.csprojAssemblyReference.cache
+.vs/
+HVS.Api/obj/
+HVS.Api/bin/

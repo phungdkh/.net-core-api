@@ -68,14 +68,11 @@ namespace HVS.Api
                     .AllowCredentials());
             });
 
-            services.AddMvc().AddJsonOptions(opt =>
+            services.AddControllers().AddNewtonsoftJson(options =>
             {
-                opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            })
-              .AddJsonOptions(opt =>
-              {
-                  opt.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
-              });
+                // Use the default property (Pascal) casing
+                options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+            });
 
             services.AddSingleton(Configuration);
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
@@ -154,16 +151,9 @@ namespace HVS.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                loggerFactory.AddSerilog();
-                loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-                loggerFactory.AddDebug(LogLevel.Debug);
             }
-            else if (env.IsProduction())
-            {
-                loggerFactory.AddSerilog();
-                loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-                loggerFactory.AddDebug(LogLevel.Warning);
-            }
+
+            loggerFactory.AddSerilog();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();

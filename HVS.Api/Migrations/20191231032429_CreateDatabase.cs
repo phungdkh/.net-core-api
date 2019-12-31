@@ -12,7 +12,6 @@ namespace HVS.Api.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
                     RecordOrder = table.Column<int>(nullable: false),
                     RecordDeleted = table.Column<bool>(nullable: false),
                     RecordActive = table.Column<bool>(nullable: false),
@@ -21,7 +20,8 @@ namespace HVS.Api.Migrations
                     UpdatedOn = table.Column<DateTime>(nullable: true),
                     UpdatedBy = table.Column<Guid>(nullable: true),
                     DeletedBy = table.Column<Guid>(nullable: true),
-                    DeletedOn = table.Column<DateTime>(nullable: true)
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -33,6 +33,15 @@ namespace HVS.Api.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    RecordOrder = table.Column<int>(nullable: false),
+                    RecordDeleted = table.Column<bool>(nullable: false),
+                    RecordActive = table.Column<bool>(nullable: false),
+                    CreatedOn = table.Column<DateTime>(nullable: true),
+                    CreatedBy = table.Column<Guid>(nullable: true),
+                    UpdatedOn = table.Column<DateTime>(nullable: true),
+                    UpdatedBy = table.Column<Guid>(nullable: true),
+                    DeletedBy = table.Column<Guid>(nullable: true),
+                    DeletedOn = table.Column<DateTime>(nullable: true),
                     Email = table.Column<string>(maxLength: 255, nullable: true),
                     Password = table.Column<string>(maxLength: 512, nullable: false),
                     PasswordSalt = table.Column<string>(maxLength: 512, nullable: false),
@@ -49,16 +58,7 @@ namespace HVS.Api.Migrations
                     ResetPasswordCode = table.Column<string>(nullable: true),
                     ResetPasswordExpiryDate = table.Column<DateTime>(nullable: true),
                     Verified = table.Column<bool>(nullable: false),
-                    VerifyCode = table.Column<string>(nullable: true),
-                    RecordOrder = table.Column<int>(nullable: false),
-                    RecordDeleted = table.Column<bool>(nullable: false),
-                    RecordActive = table.Column<bool>(nullable: false),
-                    CreatedOn = table.Column<DateTime>(nullable: true),
-                    CreatedBy = table.Column<Guid>(nullable: true),
-                    UpdatedOn = table.Column<DateTime>(nullable: true),
-                    UpdatedBy = table.Column<Guid>(nullable: true),
-                    DeletedBy = table.Column<Guid>(nullable: true),
-                    DeletedOn = table.Column<DateTime>(nullable: true)
+                    VerifyCode = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -69,9 +69,9 @@ namespace HVS.Api.Migrations
                 name: "UserInRole",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false),
                     RoleId = table.Column<Guid>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     RecordOrder = table.Column<int>(nullable: false),
                     RecordDeleted = table.Column<bool>(nullable: false),
                     RecordActive = table.Column<bool>(nullable: false),
@@ -85,7 +85,6 @@ namespace HVS.Api.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserInRole", x => new { x.UserId, x.RoleId });
-                    table.UniqueConstraint("AK_UserInRole_Id", x => x.Id);
                     table.ForeignKey(
                         name: "FK_UserInRole_Role_RoleId",
                         column: x => x.RoleId,
