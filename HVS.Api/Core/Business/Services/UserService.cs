@@ -14,6 +14,7 @@ using HVS.Api.Core.Business.Models;
 using System.Threading.Tasks;
 using HVS.Api.Core.Common.Helpers;
 using HVS.Api.Core.Common.Reflections;
+using AutoMapper;
 
 namespace HVS.Api.Core.Business.Services
 {
@@ -136,7 +137,9 @@ namespace HVS.Api.Core.Business.Services
             }
             else
             {
-                user = AutoMapper.Mapper.Map<User>(userRegisterModel);
+                //TODO: use auto map
+                user = new User();
+                //user = Mapper.Map<User>(userRegisterModel);
                 userRegisterModel.Password.GeneratePassword(out string saltKey, out string hashPass);
 
                 user.Password = hashPass;

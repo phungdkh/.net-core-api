@@ -15,8 +15,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.PlatformAbstractions;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Serilog;
 using Serilog.Extensions.Logging;
@@ -24,6 +22,9 @@ using Swashbuckle.AspNetCore.Swagger;
 using HVS.Api.Core.DataAccess.Repositories.Base;
 using HVS.Api.Core.Common.Helpers;
 using HVS.Api.Core.Business.Models.Users;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
+using System;
 
 namespace HVS.Api
 {
@@ -62,10 +63,11 @@ namespace HVS.Api
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
-                  builder => builder.AllowAnyOrigin()
+                  builder => builder.SetIsOriginAllowed(host => true)
                     .AllowAnyMethod()
                     .AllowAnyHeader()
-                    .AllowCredentials());
+                    .AllowCredentials()
+                    );
             });
 
             services.AddControllers().AddNewtonsoftJson(options =>
@@ -86,11 +88,13 @@ namespace HVS.Api
             });
             services.AddSingleton<ILoggerProvider, SerilogLoggerProvider>();
 
+            //services.AddAutoMapper();
+
             //Config Automapper map
-            Mapper.Initialize(config =>
-            {
-                config.CreateMap<User, UserRegisterModel>().ReverseMap();
-            });
+            //Mapper.Initialize(config =>
+            //{
+            //    config.CreateMap<User, UserRegisterModel>().ReverseMap();
+            //});
 
             var conn = Configuration.GetConnectionString("DefaultConnectionString");
             services.AddDbContextPool<HVSNetCoreDbContext>(options => options.UseSqlServer(conn));
@@ -121,22 +125,17 @@ namespace HVS.Api
             // Register the Swagger generator, defining one or more Swagger documents
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info
+                c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
                     Title = "HVS API",
                     Description = "ASP.NET Core API.",
-                    TermsOfService = "None",
-                    Contact = new Contact { Name = "DINH KHAC HOAI PHUNG", Email = "phungdkh@gmail.com", Url = "" },
+                    TermsOfService = null,
+                    Contact = new OpenApiContact { Name = "DINH KHAC HOAI PHUNG", Email = "phungdkh@gmail.com", Url = null },
                 });
 
                 c.DescribeAllParametersInCamelCase();
                 c.OperationFilter<AccessTokenHeaderParameterOperationFilter>();
-
-                // Set the comments path for the Swagger JSON and UI.
-                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
-                var xmlPath = Path.Combine(basePath, "HVS.Api.xml");
-                c.IncludeXmlComments(xmlPath);
             });
 
             services.AddAuthentication(Microsoft.AspNetCore.Server.IISIntegration.IISDefaults.AuthenticationScheme);
@@ -163,7 +162,7 @@ namespace HVS.Api
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "HVS API V1");
             });
-            app.UseMvc();
+            app.UseRouting();
 
             // Auto run migration
             RunMigration(app);
