@@ -45,7 +45,7 @@ namespace HVS.Api.Core.Business.Services
 
         public async Task<PagedList<RoleViewModel>> ListRoleAsync(RoleRequestListViewModel roleRequestListViewModel)
         {
-            var list = await GetAll().Where(x => (string.IsNullOrEmpty(roleRequestListViewModel.Query)
+            var list = await GetAll().Where(x => (string.IsNullOrEmpty((roleRequestListViewModel).Query)
                         || (x.Name.Contains(roleRequestListViewModel.Query)))
                     ).Select(x => new RoleViewModel(x)).ToListAsync();
 
