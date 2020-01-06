@@ -21,6 +21,8 @@ namespace HVS.Api.Core.Business.Services
     public interface IPostService
     {
         Task<PagedList<PostViewModel>> ListPostAsync(PostRequestListViewModel postRequestListViewModel);
+
+        Task<ResponseModel> CreatePostAsync(PostRequestCreateViewModel postRequestCreateViewModel);
         
     }
 
@@ -71,6 +73,17 @@ namespace HVS.Api.Core.Business.Services
             return new PagedList<PostViewModel>(list, postRequestListViewModel.Offset ?? CommonConstants.Config.DEFAULT_SKIP, postRequestListViewModel.Limit ?? CommonConstants.Config.DEFAULT_TAKE);
         }
 
+        public async Task<ResponseModel> CreatePostAsync(PostRequestCreateViewModel postRequestCreateViewModel)
+        {
+            Post post = new Post();
+            post.Title = postRequestCreateViewModel.Title;
+            post.Thumbnail = postRequestCreateViewModel.Thumnail;
+            post.Content = postRequestCreateViewModel.Content;
+
+            return await _postRepository.InsertAsync(post);
+
+        }
+
         #region Private Method 
 
         public IQueryable<Post> GetAll()
@@ -88,4 +101,6 @@ namespace HVS.Api.Core.Business.Services
 
         #endregion
     }
+
+
 }

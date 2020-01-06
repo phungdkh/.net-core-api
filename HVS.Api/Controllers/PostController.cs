@@ -2,7 +2,6 @@
 using HVS.Api.Core.Business.Services;
 using System;
 using Microsoft.AspNetCore.Cors;
-using HVS.Api.Core.Business.Models.Users;
 using HVS.Api.Core.Business.Models.Posts;
 using HVS.Api.Core.Business.Filters;
 using System.Threading.Tasks;
@@ -29,6 +28,14 @@ namespace HVS.Api.Controllers
             var posts = await _postService.ListPostAsync(postRequestListViewModel);
 
             return Ok(posts);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Store([FromBody] PostRequestCreateViewModel postRequestCreateViewModel)
+        {
+            var post = await _postService.CreatePostAsync(postRequestCreateViewModel);
+
+            return Ok(post);
         }
     }
 }
