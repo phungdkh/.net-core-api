@@ -9,7 +9,6 @@ using HVS.Api.Core.Common.Helpers;
 namespace HVS.Api.Controllers
 {
     [Route("api/sso")]
-    [EnableCors("CorsPolicy")]
     public class SSOController : Controller
     {
         private readonly ISSOAuthService _ssoService;

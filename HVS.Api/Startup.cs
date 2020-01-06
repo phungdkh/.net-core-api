@@ -165,6 +165,11 @@ namespace HVS.Api
             });
             app.UseRouting();
 
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+
             // Auto run migration
             RunMigration(app);
 

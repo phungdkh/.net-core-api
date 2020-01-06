@@ -9,7 +9,6 @@ using HVS.Api.Core.Common.Helpers;
 namespace HVS.Api.Controllers
 {
     [Route("api/media")]
-    [EnableCors("CorsPolicy")]
     public class MediaController : Controller
     {
         [HttpPost]

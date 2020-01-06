@@ -31,7 +31,7 @@ namespace HVS.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Store([FromBody] PostRequestCreateViewModel postRequestCreateViewModel)
+        public async Task<IActionResult> Post([FromBody] PostRequestCreateViewModel postRequestCreateViewModel)
         {
             var post = await _postService.CreatePostAsync(postRequestCreateViewModel);
 

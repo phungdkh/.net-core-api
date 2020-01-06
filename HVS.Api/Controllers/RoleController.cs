@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 namespace HVS.Api.Controllers
 {
     [Route("api/roles")]
-    [EnableCors("CorsPolicy")]
     public class RoleController : Controller
     {
         private readonly IRoleService _roleService;

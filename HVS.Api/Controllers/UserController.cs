@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 namespace HVS.Api.Controllers
 {
     [Route("api/users")]
-    [EnableCors("CorsPolicy")]
     public class UserController : Controller
     {
         private readonly IUserService _userService;
