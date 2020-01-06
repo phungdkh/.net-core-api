@@ -92,6 +92,10 @@ namespace HVS.Api.Core.Entities
 
         public List<UserInRole> UserInRoles { get; set; }
 
+        public List<Post> Posts { get; set; }
+
+        public List<Comment> Comments { get; set; }
+
         #endregion
     }
 }

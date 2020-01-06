@@ -10,5 +10,6 @@ namespace HVS.Api.Core.Business.Models.Base
         }
         public Guid Id { get; set; }
         public string Name { get; set; }
+
     }
 }

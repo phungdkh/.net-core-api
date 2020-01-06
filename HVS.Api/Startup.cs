@@ -110,6 +110,7 @@ namespace HVS.Api
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ISSOAuthService, SSOAuthService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IPostService, PostService>();
 
             //Register MemoryCacheManager
             services.AddScoped<ICacheManager, MemoryCacheManager>();
