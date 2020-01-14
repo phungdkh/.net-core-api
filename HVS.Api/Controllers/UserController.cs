@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using HVS.Api.Core.Business.Services;
 using System;
-using Microsoft.AspNetCore.Cors;
 using HVS.Api.Core.Business.Models.Users;
 using HVS.Api.Core.Business.Filters;
 using System.Threading.Tasks;
@@ -32,21 +31,7 @@ namespace HVS.Api.Controllers
         public async Task<IActionResult> Put(Guid id, [FromBody] UserUpdateProfileModel userUpdateProfileModel)
         {
             var responseModel = await _userService.UpdateProfileAsync(id, userUpdateProfileModel);
-            if (responseModel.StatusCode == System.Net.HttpStatusCode.NotFound)
-            {
-                return NotFound("User không tồn tại trong hệ thống. Vui lòng kiểm tra lại!");
-            }
-            else
-            {
-                if (responseModel.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    return Ok(responseModel.Data);
-                }
-                else
-                {
-                    return BadRequest(new { Message = responseModel.Message });
-                }
-            }
+            return new CustomActionResult(responseModel);
         }
 
         [HttpDelete("{id}")]
@@ -54,14 +39,7 @@ namespace HVS.Api.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             var responseModel = await _userService.DeleteUserAsync(id);
-            if (responseModel.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                return Ok(responseModel.Data);
-            }
-            else
-            {
-                return BadRequest(new { Message = responseModel.Message });
-            }
+            return new CustomActionResult(responseModel);
         }
 
         #region Other Methods
@@ -77,28 +55,14 @@ namespace HVS.Api.Controllers
         public async Task<IActionResult> VerifyCode(Guid userId, [FromBody] VerifyCodeModel verifyCodeModel)
         {
             var responseModel = await _userService.VerifyCodeAsync(userId, verifyCodeModel.Code);
-            if (responseModel.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                return Ok(responseModel.Data);
-            }
-            else
-            {
-                return BadRequest(new { Message = responseModel.Message });
-            }
+            return new CustomActionResult(responseModel);
         }
 
         [HttpGet("resend-code/{userId}")]
         public async Task<IActionResult> ResendCode(Guid userId)
         {
             var responseModel = await _userService.ResendCodeAsync(userId);
-            if (responseModel.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                return Ok(responseModel.Message);
-            }
-            else
-            {
-                return BadRequest(new { Message = responseModel.Message });
-            }
+            return new CustomActionResult(responseModel);
         }
 
         #endregion

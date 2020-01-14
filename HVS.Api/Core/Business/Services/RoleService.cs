@@ -18,7 +18,7 @@ namespace HVS.Api.Core.Business.Services
     public interface IRoleService
     {
         Task<PagedList<RoleViewModel>> ListRoleAsync(RoleRequestListViewModel userRequestListViewModel);
-        Task<RoleViewModel> GetRoleByNameAsync(string name);
+        Task<ResponseModel> GetRoleByNameAsync(string name);
     }
 
     public class RoleService : IRoleService
@@ -76,16 +76,24 @@ namespace HVS.Api.Core.Business.Services
             return new PagedList<RoleViewModel>(list, roleRequestListViewModel.Offset ?? CommonConstants.Config.DEFAULT_SKIP, roleRequestListViewModel.Limit ?? CommonConstants.Config.DEFAULT_TAKE);
         }
 
-        public async Task<RoleViewModel> GetRoleByNameAsync(string name)
+        public async Task<ResponseModel> GetRoleByNameAsync(string name)
         {
             var role = await _roleRepository.FetchFirstAsync(x => x.Name == name);
             if (role == null)
             {
-                return null;
+                return new ResponseModel()
+                {
+                    StatusCode = System.Net.HttpStatusCode.NotFound,
+                    Message = "Role is not found"
+                };
             }
             else
             {
-                return new RoleViewModel(role);
+                return new ResponseModel()
+                {
+                    StatusCode = System.Net.HttpStatusCode.OK,
+                    Data = new RoleViewModel(role)
+                };
             }
         }
 

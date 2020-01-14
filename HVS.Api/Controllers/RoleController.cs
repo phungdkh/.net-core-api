@@ -1,13 +1,11 @@
-﻿using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Mvc;
-using HVS.Api.Core.Business.Filters;
-using HVS.Api.Core.Business.Models.Roles;
-using HVS.Api.Core.Business.Services;
-using HVS.Api.Core.Common.Constants;
-using System.Threading.Tasks;
-
-namespace HVS.Api.Controllers
+﻿namespace HVS.Api.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+    using HVS.Api.Core.Business.Models.Roles;
+    using HVS.Api.Core.Business.Services;
+    using System.Threading.Tasks;
+    using HVS.Api.Core.Business.Filters;
+
     [Route("api/roles")]
     public class RoleController : Controller
     {
@@ -27,14 +25,10 @@ namespace HVS.Api.Controllers
         }
 
         [HttpGet("by-name")]
-        public async Task<IActionResult> GetbyName(string name)
+        public async Task<IActionResult> GetByName(string name)
         {
-            var role = await _roleService.GetRoleByNameAsync(name);
-            if (role == null)
-            {
-                return NotFound("Nội dung không tìm thấy trong hệ thống!");
-            }
-            return Ok(role);
+            var responseModel = await _roleService.GetRoleByNameAsync(name);
+            return new CustomActionResult(responseModel);
         }
     }
 }
